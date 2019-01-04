@@ -82,7 +82,7 @@ class ActiveController extends  AdminBaseController
             $this->error("ID Error");
         }
         $makeQRCode = $this->request->param('qr');
-        $url = $_SERVER['HTTP_HOST'].'/share/public/active/Main/Index?activeid='.urlencode(secret($id,'qazwsxedcrfvtgbyhnujmiklop')).'&userid=';
+        $url = $_SERVER['HTTP_HOST'].'/share/public/active/Main/Index?a='.urlencode(secret($id,'qazwsxedcrfvtgbyhnujmiklop')).'&u=';
 
         if ($makeQRCode){
             Vendor('phpqrcode.phpqrcode');

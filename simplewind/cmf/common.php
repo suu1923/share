@@ -2076,6 +2076,7 @@ function cmf_core_path()
 }
 
 /**
+ * 加密
  * @param $string
  * @param $code
  * @param bool $operation

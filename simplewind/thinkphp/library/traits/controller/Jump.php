@@ -106,6 +106,18 @@ trait Jump
     }
 
     /**
+     * 自定义微信错误返回页面
+     */
+    protected function weerr( array $header = []){
+        $type = $this->getResponseType();
+        $template = Config::get('template');
+        $view = Config::get('view_replace_str');
+        $result = ViewTemplate::instance($template, $view)->fetch(Config::get('no_wechat_tmpl'));
+        $response = Response::create($result, $type)->header($header);
+        throw new HttpResponseException($response);
+    }
+
+    /**
      * 返回封装后的 API 数据到客户端
      * @access protected
      * @param mixed  $data   要返回的数据
