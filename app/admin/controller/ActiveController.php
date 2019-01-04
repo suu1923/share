@@ -81,7 +81,6 @@ class ActiveController extends  AdminBaseController
         if(empty($id)){
             $this->error("ID Error");
         }
-
         $makeQRCode = $this->request->param('qr');
         $url = $_SERVER['HTTP_HOST'].'/public/activeid='.urlencode(secret($id,'qazwsxedcrfvtgbyhnujmiklop')).'&userid=';
 
