@@ -1,0 +1,72 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">所有活动</a></li>
+        <li><a href="{:url('Active/add')}">添加活动</a></li>
+    </ul>
+    <br>
+    <!--<form class="js-ajax-form" action="" method="post">-->
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+
+                <th>ID</th>
+                <th>活动名称(分享标题)</th>
+                <th>分享简介</th>
+                <th>活动价格</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>封面图</th>
+
+                <th>联系人电话</th>
+                <th>联系人地址</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <foreach name="actives" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.description}</td>
+                    <td>{$vo.piece}</td>
+                    <td>{$vo.start_time}</td>
+                    <td>{$vo.end_time}</td>
+                    <td><img src="{:cmf_get_image_preview_url($vo.img)}" width="100"/></td>
+                    <td>{$vo.phone}</td>
+                    <td>{$vo.address}</td>
+                    <td>{$vo.status}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{:url('AdminArticle/edit',array('id'=>$vo['id']))}">编辑</a>
+                        <if condition="($vo['status'] ==  '开启')">
+                            <a class="btn btn-danger" href="{:url('Active/changeStatus',array('id'=>$vo['id'],'status'=>0))}">关闭</a>
+                         <else />
+                            <a class="btn btn-success" href="{:url('Active/changeStatus',array('id'=>$vo['id'],'status'=>1))}">开启</a>
+                        </if>
+
+                        <a class="btn btn-danger js-ajax-delete" href="{:url('Active/delActive',array('id'=>$vo['id']))}">删除</a>
+                        <a class="btn btn-success" href="{:url('Active/makeUrl',array('id'=>$vo['id']))}">点击查看活动链接</a>
+                        <img src="{:url('Active/makeUrl',array('id'=>$vo['id'],'qr'=>true))}" alt="">
+                    </td>
+                </tr>
+            </foreach>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    <!--</form>-->
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    function reloadPage(win) {
+        win.location.reload();
+    }
+
+    $(function () {
+        setCookie("refersh_time", 0);
+
+    });
+</script>
+</body>
+</html>
