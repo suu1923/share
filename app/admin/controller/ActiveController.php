@@ -86,13 +86,10 @@ class ActiveController extends  AdminBaseController
 
         if ($makeQRCode){
             Vendor('phpqrcode.phpqrcode');
-
             $level = 1;
-
             $size = 4;
             $QRCode = new \QRcode();
             $QRImg = $QRCode::png($url,false,$level,$size);
-
             return $QRImg;
         }else{
             return $url;
