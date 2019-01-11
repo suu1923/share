@@ -19,4 +19,12 @@ class Main extends  Model
     protected $hidden = ['create_at', 'update_at'];
 
 
+    protected  function getEndTimeAttr($value){
+        return strtotime($value);
+    }
+
+    protected function getContentAttr($value){
+        return htmlspecialchars_decode($value);
+    }
+
 }

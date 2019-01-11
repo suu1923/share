@@ -10,6 +10,8 @@ namespace app\active\controller;
 
 use app\active\model\Main as ActiveModel;
 
+use app\active\service\WxService as WxService;
+
 class MainController extends BaseController
 {
 
@@ -27,8 +29,10 @@ class MainController extends BaseController
         // 异常处理
         // 1. 判断结束时间和当前时间
         $nowTime = date("Y-m-d H:i:s");
-        if (strtotime($nowTime) > strtotime($activeInfo['end_time'])){
-            $this->assign("end",true);
+        $endTime = date("Y-m-d H:i:s",$activeInfo['end_time']);
+        if (strtotime($nowTime) > strtotime($endTime)){
+//            $this->assign("end",true);
+            $this->error("活动已经结束");
         }
 
 
