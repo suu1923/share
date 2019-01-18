@@ -50,6 +50,30 @@
         .containers{
             width: 100%;
         }
+        .susp{
+            position: fixed;
+            top: 30%;
+            right: 0px;
+            width: 20%;
+        }
+        .my{
+            display: flex;
+            padding: 1%;
+            background-color: dodgerblue;
+            margin: 1%;
+            border-top-left-radius: 10%;
+            border-bottom-left-radius: 10%;
+
+        }
+        .my > img{
+            width: 33px;
+            height: 33px;
+        }
+        .my > a{
+            text-decoration: #ffffff;
+            margin-top: 10%;
+            color: #fff;
+        }
         .head_img{
             margin: 2%;
         }
@@ -91,8 +115,53 @@
         .active_duce h4{
             font-weight: bold;
         }
-        #modalSmall{
+        #modalSmall,#shareModal{
             padding: 5%;
+        }
+        #shareModal .modal-content{
+            /*margin:5%;*/
+            background-image: url("__TMPL__/public/static/share.png");
+            background-repeat: repeat;
+            background-position-x: center;
+            background-position-y: center;
+            background-size: 100% 100%;
+            border-radius:1%;
+        }
+        #shareModal .modal-content .modal-body{
+            margin-left:10%;
+            margin-right: 10%;
+            margin-top:1%;
+            border-radius:1%;
+            color: #000;
+            background-color: #ffffff;
+            text-align: center;
+        }
+        .share-name{
+            color: #0B90C4;
+            font-weight: bold;
+            font-size: large;
+            font-family: "Microsoft YaHei", "Source Sans Pro", Calibri, Candara, Arial, sans-serif;
+            border-bottom: 1px dashed #cccccc;
+        }
+        .share-qr{
+            margin: 0 auto;
+            width: 60%;
+            height: 60%;
+        }
+        .share-desc{
+            border-top: 1px dashed #cccccc;
+            margin-top: 5%;
+            font-size: x-small;
+            font-family: "Century Gothic", Consolas, "Liberation Mono", Courier, Verdana;
+        }
+        .share-money{
+            font-size: medium;
+            font-weight: bold;
+            color: red;
+        }
+        .share-footer{
+            position: relative;
+            bottom: 0px;
         }
         .footer{
             position: fixed;
@@ -114,6 +183,14 @@
 </head>
 <body>
 <div class="containers">
+    <!--右侧菜单栏-->
+    <div class="susp">
+        <div class="my">
+            <img src="__TMPL__/public/static/my.png" alt="">
+            <a href="{:url('Main/my')}">我的</a>
+        </div>
+
+    </div>
     <div class="head_img">
         <img src="{:cmf_get_image_url($active.img)}" >
     </div>
@@ -127,7 +204,7 @@
             </div>
             <div class="col-md-4 right">
                 <text>现只需<b>¥{$active.piece}</b>,立即抢购吧!</text>
-                <button type="button" class="btn btn-danger buy" data-toggle="modal" data-target="#modalSmall">抢购</button>
+                <button type="button" class="btn btn-danger buy check-time" data-toggle="modal" data-target="#modalSmall">抢购</button>
             </div>
         </div>
     </div>
@@ -152,38 +229,39 @@
                         </div>
                         <div class="form-group">
                             <center>
-                                <input type="button" class="btn btn-success" value="点击支付">
+                                <input type="button" class="btn btn-success check-time" value="点击支付">
                             </center>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    </div>    <div class="modal fade modal-fullscreen" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="shareModalLabel">请留下您的个人信息</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <!--分享模态框组件-->
+    <div class="modal fade modal-fullscreen" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!--<center><h3>分享有礼</h3></center>-->
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group share-name">
+                            <p>{$active.name}</p>
+                        </div>
+                        <div class="form-group share-qr">
+                            <img src="{:url('Main/makeUrl',array('id'=>$active.id,'qr'=>true))}" alt="">
+                        </div>
+                        <div class="form-group share-desc">
+                            <p>好友购买后您还有<br><span class="share-money">3.88-88.88元红包</span><br><span style="font-size:small">立即到账哦</span></p>
+                        </div>
+                        <div class="form-group share-footer">
+                            <p>长按二维码保存发送给您的好友</p>
+                        </div>
+                    </form>
+                </div>
 
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="recipient-name1" class="control-label">姓名:</label>
-                        <input type="text" class="form-control" id="recipient-name1">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="control-label">联系方1式:</label>
-                        <input type="text" class="form-control" id="message-text1">
-                    </div>
-                    <!--<div class="form-group">-->
-                    <!--</div>-->
-                </form>
             </div>
         </div>
     </div>
-</div>
     <div class="active_buies">
         <div class="active_duce">
             <h4>购买记录</h4>
@@ -210,7 +288,7 @@
 
     <div class="footer">
         <input type="button" class="btn btn-success share" value="分享有礼" data-toggle="modal" data-target="#shareModal">
-        <input type="button" class="btn btn-danger tbuy" value="立即购买" data-toggle="modal" data-target="#modalSmall">
+        <input type="button" class="btn btn-danger tbuy check-time" value="立即购买" data-toggle="modal" data-target="#modalSmall">
     </div>
 </div>
 
@@ -257,6 +335,12 @@
         });
         $('#btnTestRefreshSmall').on('click', function() {
             alert('Clicked refresh button #' + this.id);
+        });
+
+        $(".check-time").on('click',function () {
+           if(diff <= 0 ){
+               alert("活动已结束")
+           }
         });
     })
 </script>

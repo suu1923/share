@@ -48,4 +48,35 @@ class MainController extends BaseController
     }
 
     // check
+
+    // my
+    public function my(){
+        return $this->fetch();
+    }
+    // 生成二维码
+    public function createQrCode(){
+
+    }
+
+
+    public function makeUrl(){
+        $id = $this->request->param('id');
+        if(empty($id)){
+            $this->error("ID Error");
+        }
+        $makeQRCode = $this->request->param('qr');
+        $nowOpenid = "1234567889";
+        $url = $_SERVER['HTTP_HOST'].'/share/public/active/Main/Index?a='.urlencode(secret($id,'qazwsxedcrfvtgbyhnujmiklop')).'&u='.$nowOpenid;
+
+        if ($makeQRCode){
+            Vendor('phpqrcode.phpqrcode');
+            $level = 1;
+            $size = 4;
+            $QRCode = new \QRcode();
+            $QRImg = $QRCode::png($url,false,$level,$size);
+            return $QRImg;
+        }else {
+            return $url;
+        }
+    }
 }
